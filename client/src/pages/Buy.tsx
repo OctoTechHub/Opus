@@ -8,12 +8,12 @@ const BuyerComponent = () => {
     const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
 
     const buyerKeys = StellarSdk.Keypair.fromSecret(
-      "SANRKWZ23NIWJZY6V5KLSGATGF7ETVOY6JD5LGRR6YCYIXBNJZ6ODRSV"
+      "SD5GY5SHX6XZKNDQRP66GKQPWTLP3ODVDDFVLDUG7SBXB3IXLVYDPBED"
     );
 
     const NewDollar = new StellarSdk.Asset(
       "NewDollar",
-      "GBHJPRV5XBJKYKCXBVHSCIBGPCSDIBHFECAGRXKOHANLLAUXEUQ22ZJE"
+      "SDDGSCXFAGDGQXG2QEUMJCD24TIL3ETUMCHUFUKYVYV5DQ4ZNW5JLMMH"
     );
 
     server

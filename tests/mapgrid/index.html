@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Comics Interactive Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+        }
+       .block {
+            stroke: #000;
+            stroke-width: 1;
+        }
+       .avengers {
+            fill: #0343DF; /* Avengers blue */
+        }
+       .xmen {
+            fill: #FFC080; /* X-Men orange */
+        }
+       .spiderman {
+            fill: #FF69B4; /* Spider-Man red */
+        }
+       .ironman {
+            fill: #FFD700; /* Iron Man gold */
+        }
+       .captainamerica {
+            fill: #003366; /* Captain America red, white, and blue */
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
-const stellar_sdk_1 = __importDefault(require("@stellar/stellar-sdk"));
+const axios_1 = __importDefault(require("axios"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.static('public'));
@@ -34,16 +34,9 @@ app.get('/fund-account', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 app.get('/fetch-balance', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const publicKey = req.query.publicKey;
-    try {
-        const server = new stellar_sdk_1.default.Server('https://horizon-testnet.stellar.org');
-        const account = yield server.loadAccount(publicKey);
-        const balance = account.balances.find((balance) => balance.asset_type === 'native').balance;
-        res.status(200).send(`Balance: ${balance} XLM`);
-    }
-    catch (error) {
-        res.status(500).send(`Error: ${error.message}`);
-    }
+    const response = yield axios_1.default.get(`https://horizon-testnet.stellar.org/accounts/${req.query.publicKey}`);
+    console.log(response.data);
+    res.send(response.data.balances);
 }));
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);

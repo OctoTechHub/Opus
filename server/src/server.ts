@@ -1,7 +1,8 @@
 import express from 'express';
 import fetch from 'cross-fetch';
-import StellarSdk from '@stellar/stellar-sdk';
-
+import StellarSdk from 'stellar-sdk';
+import  Server from 'stellar-sdk';
+import axios from 'axios';
 const app = express();
 const port = 3000;
 
@@ -23,13 +24,10 @@ app.get('/fund-account', async (req, res) => {
 });
 
 app.get('/fetch-balance', async (req, res) => {
-    const publicKey = req.query.publicKey as string;
-
     try {
-        const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
-        const account = await server.loadAccount(publicKey);
-        const balance = account.balances.find((balance: { asset_type: string; }) => balance.asset_type === 'native').balance;
-        res.status(200).send(`Balance: ${balance} XLM`);
+        const response = await axios.get(`https://horizon-testnet.stellar.org/accounts/${req.query.publicKey}`);
+        console.log(response.data);
+        res.send(response.data.balances);
     } catch (error: any) {
         res.status(500).send(`Error: ${error.message}`);
     }

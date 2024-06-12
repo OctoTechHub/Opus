@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Keypair } from '@stellar/stellar-sdk';
 import StellarSdk from '@stellar/stellar-sdk';
+// import StellarSdk from 'stellar-sdk'
+import axios from 'axios';
 
 const StellarAccountCreation: React.FC = () => {
   const [keypair, setKeypair] = useState<Keypair | null>(null);
@@ -38,11 +40,9 @@ const StellarAccountCreation: React.FC = () => {
   const handleFetchBalance = async () => {
     if (!keypair) return;
     try {
-      const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
-      const account = await server.loadAccount(keypair.publicKey());
-      const balance = account.balances.find((balance: { asset_type: string; }) => balance.asset_type === 'native').balance;
-      setBalance(`Balance: ${balance} XLM`);
-      document.querySelector('.dets')!.innerHTML = account.balances[0].asset_code;
+      const response=await axios.get(`https://horizon-testnet.stellar.org/accounts/${keypair.publicKey()}`);
+      console.log(response.data.balances[0].balance)
+      setBalance(response.data.balances[0].balance);
     } catch (error: any) { 
       setBalance(`Error: ${error.message}`);
     }
@@ -80,7 +80,7 @@ const StellarAccountCreation: React.FC = () => {
       <button className="bg-white text-orange-500 py-2 px-4 rounded-md mb-4" onClick={handleFetchBalance}>
         Fetch Balance
       </button>
-      <p className="text-white" id="balance">{balance}</p>
+      <p className="text-white" id="balance">{balance} XLMs</p>
       <div className="dets"></div>
     </div>
   );

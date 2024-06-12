@@ -1,0 +1,20 @@
+.avengers {
+    fill: #007bff; /* Avengers blue */
+}
+
+.xmen {
+    fill: #ff7f50; /* X-Men orange */
+}
+
+.spiderman {
+    fill: #ff0000; /* Spider-Man red */
+}
+
+.ironman {
+    fill: #ffd700; /* Iron Man gold */
+}
+
+.captainamerica {
+    fill: #ffffff; /* Captain America white */
+    stroke: #0000ff; /* Captain America blue */
+}

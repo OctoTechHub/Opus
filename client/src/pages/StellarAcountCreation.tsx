@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Keypair } from '@stellar/stellar-sdk';
-import StellarSdk from '@stellar/stellar-sdk';
-// import StellarSdk from 'stellar-sdk'
 import axios from 'axios';
 
 const StellarAccountCreation: React.FC = () => {

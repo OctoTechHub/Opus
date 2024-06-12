@@ -34,9 +34,14 @@ app.get('/fund-account', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 app.get('/fetch-balance', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield axios_1.default.get(`https://horizon-testnet.stellar.org/accounts/${req.query.publicKey}`);
-    console.log(response.data);
-    res.send(response.data.balances);
+    try {
+        const response = yield axios_1.default.get(`https://horizon-testnet.stellar.org/accounts/${req.query.publicKey}`);
+        console.log(response.data);
+        res.send(response.data.balances);
+    }
+    catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
 }));
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);

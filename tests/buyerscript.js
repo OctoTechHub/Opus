@@ -2,10 +2,10 @@ var StellarSdk = require("@stellar/stellar-sdk");
 var server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
 
 // Buyer's keypair
-var buyerKeys = StellarSdk.Keypair.fromSecret("SANRKWZ23NIWJZY6V5KLSGATGF7ETVOY6JD5LGRR6YCYIXBNJZ6ODRSV");
+var buyerKeys = StellarSdk.Keypair.fromSecret("SB7Y7COPXOZPQAHJLJRNYN4DDRCV2LPHQZGUWZ3I6YJIFU7TFCYAQFYM");
 
 // Asset to buy
-var NewDollar = new StellarSdk.Asset("NewDollar", "GBHJPRV5XBJKYKCXBVHSCIBGPCSDIBHFECAGRXKOHANLLAUXEUQ22ZJE");
+var NewDollar = new StellarSdk.Asset("NewDollar", "GC7HI3ZGXLFTNFH6YBJ2TW3FIGHPQ245JLOC7DTYUNGS724F7ZN6WN22");
 
 // Create trustline to the asset
 server.loadAccount(buyerKeys.publicKey())

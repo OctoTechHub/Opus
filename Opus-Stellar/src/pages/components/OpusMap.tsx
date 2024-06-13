@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
+import StellarSdk from 'stellar-sdk';
 import './OpusMap.css';
+import BuyButton from './BuyButton';
+import allocateBlockID from '../utils/allocateBlockID';
 
 interface OpusMapProps {
   publicKey: string;
@@ -11,11 +13,11 @@ interface OpusMapProps {
 
 const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string }, onBuy: (id: number) => void }) => {
   return (
+    
     <div className="sidebar">
       <h2>Block {selectedBlock.id}</h2>
       <p>Team: {selectedBlock.team}</p>
-      <button onClick={() => onBuy(selectedBlock.id)}>Buy</button>
-      <button>Sell</button>
+      <BuyButton/>
     </div>
   );
 };
@@ -38,7 +40,6 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
     const blockSize = 0.001;
     const blocksBounds: L.LatLngBoundsLiteral = [[40.70, -74.02], [40.75, -73.97]];
 
-    // Create a mask layer covering the entire map
     const mask = L.rectangle(blocksBounds, {
       fillOpacity: 0,
       weight: 0,
@@ -69,6 +70,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
         id++;
       }
     }
+    
 
     function getRandomTeam() {
       const teams = ['avengers', 'xmen', 'spiderman', 'ironman', 'captainamerica'];
@@ -90,18 +92,25 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
     };
   }, []);
 
-  const handleBuyBlock = (id: number) => {
-    if (secretKey) {  // Simplified authentication check
-      setOwnership((prevOwnership) => ({
-        ...prevOwnership,
-        [id]: publicKey
-      }));
-      setUser((prevUser) => ({
-        ...prevUser,
-        ownedBlocks: [...prevUser.ownedBlocks, id]
-      }));
-      if (selectedBlock) {
-        setSelectedBlock({ ...selectedBlock, team: publicKey });
+  const handleBuyBlock = async (id: number) => {
+    if (secretKey) {
+      try {
+        // Call allocateBlockID function with relevant parameters
+        await allocateBlockID(id.toString(), secretKey, 'NewDollar', 'GA2XMHHFMN3NDSG5BLQYTDIYFYHBRQFYJ4DZKKBI7JDVIVPIVHVNA2ND', '10');
+        setOwnership(prevOwnership => ({
+          ...prevOwnership,
+          [id]: publicKey
+        }));
+        setUser(prevUser => ({
+          ...prevUser,
+          ownedBlocks: [...prevUser.ownedBlocks, id]
+        }));
+        if (selectedBlock) {
+          setSelectedBlock({ ...selectedBlock, team: publicKey });
+        }
+      } catch (error: any) {
+        console.error('Transaction failed:', error.response?.data || error.message);
+        alert('Transaction failed');
       }
     } else {
       alert('Authentication failed');
@@ -111,9 +120,12 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
   return (
     <div className="map-container">
       <div id="map" className="map"></div>
-      {selectedBlock && (
+      <div className='mt-10'>
+
+    <div className='items-end	'>{selectedBlock && (
         <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
-      )}
+      )}</div>  
+      </div>
     </div>
   );
 };

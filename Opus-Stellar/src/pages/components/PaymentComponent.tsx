@@ -9,7 +9,6 @@ const PaymentComponent = ({ publicKey }: { publicKey: string }) => {
   const handlePayment = async () => {
     try {
       const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
-      const issuingKeys = StellarSdk.Keypair.fromSecret('ISSUING_SECRET_KEY_HERE');
 
       // Load receiving account
       const receivingAccount = await server.loadAccount(publicKey);

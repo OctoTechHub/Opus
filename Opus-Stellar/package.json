@@ -1,8 +1,8 @@
 {
-  "name": "client",
+  "name": "opus-stellar",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -11,16 +11,13 @@
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^12.0.1",
-    "axios": "^1.7.2",
+    "@types/leaflet": "^1.9.12",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.1",
-    "stellar-sdk": "^12.0.1",
-    "web3": "^4.9.0"
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.12",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

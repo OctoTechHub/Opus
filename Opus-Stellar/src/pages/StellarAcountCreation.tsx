@@ -1,3 +1,4 @@
+// StellarAccountCreation component
 import React, { useState, useEffect } from 'react';
 import { Keypair } from '@stellar/stellar-sdk';
 import axios from 'axios';
@@ -30,6 +31,7 @@ const StellarAccountCreation: React.FC = () => {
       const response = await fetch(`https://friendbot.stellar.org?addr=${keypair.publicKey()}`);
       if (response.ok) {
         setFundingResult(true);
+        // Navigate to BuyLand only upon successful funding
         navigate('/buyLand', { state: { publicKey: keypair.publicKey() } });
       } else {
         throw new Error('Failed to fund account');
@@ -78,9 +80,6 @@ const StellarAccountCreation: React.FC = () => {
       {fundingResult && (
         <div id="funding-result" className="text-white mb-4">
           <p>Account funded successfully!</p>
-          <button onClick={() => keypair && navigate('/buyLand', { state: { publicKey: keypair.publicKey() } })}>
-            Go to Buy Land
-          </button>
         </div>
       )}
       <button className="bg-white text-orange-500 py-2 px-4 rounded-md mb-4" onClick={handleFetchBalance}>

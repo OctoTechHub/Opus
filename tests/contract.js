@@ -1,8 +1,7 @@
-const { Server, Keypair, TransactionBuilder, Networks, Operation } = require('stellar-sdk');
-
+const { Keypair, TransactionBuilder, Networks, Operation } = require('stellar-sdk');
+var StellarSdk = require("stellar-sdk");
 async function handleBuyLandTransaction(senderSecretKey, buyerPublicKey, amount) {
-    const server = new Server('https://horizon-testnet.stellar.org');
-
+    var server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
     const senderKeypair = Keypair.fromSecret(senderSecretKey);
     const buyerKeypair = Keypair.fromPublicKey(buyerPublicKey);
 
@@ -35,8 +34,8 @@ async function handleBuyLandTransaction(senderSecretKey, buyerPublicKey, amount)
     }
 }
 
-const senderSecretKey = 'GDO7FWR4MJ63RE4ONSTFKLX4V7G2365SN47JW2QQMD6EQXS743DRYZUM';
-const buyerPublicKey = 'SCYMLP6EZFQOOJQKS2PEIU76OSEBYNJIRTY6VMKGXM74GMWZ346WSGWP ';
+const senderSecretKey = 'GA2XMHHFMN3NDSG5BLQYTDIYFYHBRQFYJ4DZKKBI7JDVIVPIVHVNA2ND';
+const buyerPublicKey = 'SBX5NSTIVW2WUML64RQTJLPT7ZXM4GYGGNPRWMUF6A6V6UZHUIQBFYI3';
 const amount = 100; 
 
 handleBuyLandTransaction(senderSecretKey, buyerPublicKey, amount)

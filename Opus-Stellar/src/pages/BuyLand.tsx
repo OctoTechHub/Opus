@@ -1,23 +1,18 @@
-import { useEffect, useState } from 'react';
+// BuyLand component
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import OpusMap from "./components/OpusMap";
 
 const BuyLand = () => {
   const location = useLocation();
   const [publicKey, setPublicKey] = useState('');
-  const [secretKey, setSecretKey] = useState('');
 
   useEffect(() => {
-    console.log('useEffect hook executed');
     if (location.state) {
-      const { publicKey, secretKey } = location.state;
+      const { publicKey } = location.state;
       setPublicKey(publicKey);
-      setSecretKey(secretKey);
     }
   }, [location]);
-
-  console.log('PublicKey:', publicKey);
-  console.log('SecretKey:', secretKey);
 
   return (
     <div className="bg-gradient-to-br from-blue-400 to-purple-600 min-h-screen flex flex-col justify-center items-center">
@@ -26,11 +21,9 @@ const BuyLand = () => {
         <p className="text-lg mb-6 text-center text-gray-700">Explore available land:</p>
         <nav className="text-center text-gray-600 mb-4">
           Public Key: {publicKey}
-          <br />
-          Secret Key: {secretKey}
         </nav>
         <div className="w-full max-w-screen-lg">
-          <OpusMap publicKey={publicKey} secretKey={secretKey} />
+          <OpusMap publicKey={publicKey} secretKey={location.state.secretKey} />
         </div>
       </div>
     </div>

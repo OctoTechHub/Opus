@@ -26,13 +26,13 @@ const BuyLand = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-br from-gray-800 to-black min-h-screen flex flex-col justify-center items-center">
+      <div className="bg-gradient-to-br from-gray-800 to-black rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
         <div className="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg">
           <h2 className="text-3xl font-bold mb-4 text-center text-gray-800">Buy Opus Land 🌴</h2>
           <nav className="text-center text-gray-500 mb-4">
            
           </nav>
-          <div className="w-full max-w-screen-lg flex-justify-center">
+          <div className="w-full max-w-screen-lg ">
             <OpusMap publicKey={publicKey} privateKey={privateKey} />
           </div>
           <div className="mt-8">

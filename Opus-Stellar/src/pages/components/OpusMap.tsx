@@ -8,12 +8,11 @@ import allocateBlockID from '../utils/allocateBlockID';
 
 interface OpusMapProps {
   publicKey: string;
-  secretKey: string;
+  privateKey: string; // Changed from secretKey to privateKey
 }
 
 const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string }, onBuy: (id: number) => void }) => {
   return (
-    
     <div className="sidebar">
       <h2>Block {selectedBlock.id}</h2>
       <p>Team: {selectedBlock.team}</p>
@@ -22,12 +21,12 @@ const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: 
   );
 };
 
-const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
+const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
   const [selectedBlock, setSelectedBlock] = useState<{ id: number; team: string } | null>(null);
   const [ownership, setOwnership] = useState<{ [key: number]: string }>({});
-  const [user, setUser] = useState<{ publicKey: string; secretKey: string; ownedBlocks: number[] }>({
+  const [user, setUser] = useState<{ publicKey: string; privateKey: string; ownedBlocks: number[] }>({
     publicKey,
-    secretKey,
+    privateKey,
     ownedBlocks: []
   });
 
@@ -70,7 +69,6 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
         id++;
       }
     }
-    
 
     function getRandomTeam() {
       const teams = ['avengers', 'xmen', 'spiderman', 'ironman', 'captainamerica'];
@@ -93,10 +91,9 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
   }, []);
 
   const handleBuyBlock = async (id: number) => {
-    if (secretKey) {
+    if (privateKey) {
       try {
-        // Call allocateBlockID function with relevant parameters
-        await allocateBlockID(id.toString(), secretKey, 'NewDollar', 'GA2XMHHFMN3NDSG5BLQYTDIYFYHBRQFYJ4DZKKBI7JDVIVPIVHVNA2ND', '10');
+        await allocateBlockID(id.toString(), privateKey, 'NewDollar', 'GA2XMHHFMN3NDSG5BLQYTDIYFYHBRQFYJ4DZKKBI7JDVIVPIVHVNA2ND', '10');
         setOwnership(prevOwnership => ({
           ...prevOwnership,
           [id]: publicKey
@@ -121,10 +118,11 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, secretKey }) => {
     <div className="map-container">
       <div id="map" className="map"></div>
       <div className='mt-10'>
-
-    <div className='items-end	'>{selectedBlock && (
-        <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
-      )}</div>  
+        <div className='items-end'>
+          {selectedBlock && (
+            <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
+          )}
+        </div>  
       </div>
     </div>
   );

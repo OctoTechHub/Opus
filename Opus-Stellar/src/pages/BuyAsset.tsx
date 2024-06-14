@@ -50,7 +50,7 @@ const BuyAsset = () => {
             <div className="flex bg-blue-600 px-30 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
                 <p className="text-2xl">Get your Account Details and buy OP Tokens to enter the Metaverse</p>
                 <p>Rate of OP Token is</p>
-                <p>1 OP = 1 XLM</p>
+                <p>1 OP = 10 XLM</p>
                 <div className="w-full flex flex-col gap-3 justify-between">
                     <div className="flex gap-2 justify-center">
                         <input

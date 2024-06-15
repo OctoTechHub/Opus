@@ -30,7 +30,7 @@ const BuyAsset = () => {
         `https://horizon-testnet.stellar.org/accounts/${publicKey}`
       );
       console.log(response.data);
-      setBalance(response.data.balances[0].balance);
+      setBalance(response.data.balances[1].balance);
     } catch (error) {
       console.error("Error fetching account details:", error);
     } finally {

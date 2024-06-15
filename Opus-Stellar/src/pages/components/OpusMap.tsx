@@ -12,11 +12,14 @@ interface OpusMapProps {
 }
 
 const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string }, onBuy: (id: number) => void }) => {
+  const publickey=localStorage.getItem("publickey");
+  const privatekey=localStorage.getItem("privatekey");
+  const blockid=selectedBlock.id.toString()
   return (
     <div className="sidebar ">
       <h2>Block {selectedBlock.id}</h2>
       <p>Team: {selectedBlock.team}</p>
-      <BuyButton/>
+      <BuyButton Block={blockid} publickey={publickey} privatekey={privatekey}/>
     </div>
   );
 };

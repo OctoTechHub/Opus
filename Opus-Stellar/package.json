@@ -14,10 +14,12 @@
     "@types/leaflet": "^1.9.12",
     "@types/mongoose": "^5.11.97",
     "axios": "^1.7.2",
+    "d3": "^7.9.0",
     "leaflet": "^1.9.4",
     "mongoose": "^8.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-globe.gl": "^2.27.2",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "stellar-sdk": "^12.0.1"

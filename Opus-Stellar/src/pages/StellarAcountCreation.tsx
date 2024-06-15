@@ -69,7 +69,7 @@ const StellarAccountCreation = () => {
     <Navbar/>
     <div className="flex justify-center w-screen bg-gradient-to-br from-gray-800 to-black items-center h-screen">
       <ToastContainer /> 
-      <div className="flex bg-gradient-to-br from-gray-700 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
+      <div className="flex h-4/5 bg-gradient-to-br from-gray-700 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
         <h1 className="text-4xl font-bold font-mono">Opus-Stellar 
         <svg xmlns="Opus-Stellar\src\assets\saturn-svgrepo-com.svg" className="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"> </svg>
         </h1>

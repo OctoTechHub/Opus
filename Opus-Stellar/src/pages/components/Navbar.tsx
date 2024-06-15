@@ -7,14 +7,14 @@ const Navbar = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [publicKey, setPublicKey] = useState('');
   const [privateKey, setPrivateKey] = useState('');
-  const [optokens, setOptokens] = useState(0); 
+  const [optokens, setOptokens] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     const storedPublicKey = localStorage.getItem('publickey');
     const storedPrivateKey = localStorage.getItem('privatekey');
-    const storedOptokens = localStorage.getItem('optokens'); 
+    const storedOptokens = localStorage.getItem('optokens');
     if (storedPublicKey) {
       setPublicKey(storedPublicKey);
     }
@@ -22,14 +22,14 @@ const Navbar = () => {
       setPrivateKey(storedPrivateKey);
     }
     if (storedOptokens) {
-      setOptokens(parseInt(storedOptokens, 10)); 
+      setOptokens(parseInt(storedOptokens, 10));
     }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('publickey');
     localStorage.removeItem('privatekey');
-    localStorage.removeItem('optokens'); 
+    localStorage.removeItem('optokens');
     navigate('/');
   };
 
@@ -44,13 +44,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md py-4">
+    <nav className="bg-black text-white shadow-md py-4">
       <ToastContainer />
-      <div className="container mx-auto px-4">
+      <div className="container border-b w-screen px-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-lg font-bold text-gray-800">
+          <Link to="/" className="text-2xl font-bold text-white">
             Stellar App
           </Link>
+          {location.pathname === '/' && (
+            <div >
+              <button onClick={()=>{
+                navigate('/create')
+
+              }} className="px-2 rounded-lg bg-amber-600 text-white py-2">
+                Join Opus-Stellar
+              </button>
+            </div>
+          )}
           {location.pathname !== '/' && (
             <div className="relative">
               <button

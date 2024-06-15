@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Globe from 'react-globe.gl';
-import './GlobeComponent.css'; 
+import './GlobeComponent.css';
 const GlobeComponent: React.FC = () => {
   const [arcsData, setArcsData] = useState<any[]>([]);
   const [title, setTitle] = useState<string>('Welcome to Opus-Stellar!');
@@ -19,8 +19,12 @@ const GlobeComponent: React.FC = () => {
 
   return (
     <div className="globe-container">
-      <div className="globe-title">
-        {title}
+      <div className="globe-title text-center ">
+        <p className='text-3xl'>
+
+          {title}
+        </p>
+        <p className='text-md '>Enter into the World of Virtual Estate</p>
       </div>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"

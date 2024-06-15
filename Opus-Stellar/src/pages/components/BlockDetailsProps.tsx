@@ -1,6 +1,7 @@
 import React from 'react';
 import { blockImages } from './blockImages';
 import './blockdetails.css';
+import BuyButton from './BuyButton';
 
 interface BlockDetailsProps {
   selectedBlock: { id: number; team: string } | null;
@@ -19,12 +20,15 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock, onBuy }) => 
   const blockImage = blockImages[selectedBlock.team];
 
   return (
-    <div className="block-details">
+    <div className="block-details bg-slate-300 font-mono hover:bg-slate-100 transition duration-200">
       <h2>Block {selectedBlock.id}</h2>
       <p>Team: {selectedBlock.team}</p>
       {blockImage && <img src={blockImage} alt={selectedBlock.team} />}
-      <button onClick={() => onBuy(selectedBlock.id)}>Buy</button>
-      <button>Sell</button>
+      <BuyButton
+        Block={selectedBlock.id.toString()}  
+        publickey={localStorage.getItem('publickey') || null}  
+        privatekey={localStorage.getItem('privatekey') || null} 
+      />
     </div>
   );
 };

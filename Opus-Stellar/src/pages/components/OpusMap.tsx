@@ -14,30 +14,7 @@ interface OpusMapProps {
   privateKey: string;
 }
 
-const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string } | null, onBuy: (id: number) => void }) => {
-  const publickey = localStorage.getItem("publickey");
-  const privatekey = localStorage.getItem("privatekey");
 
-  if (!publickey || !privatekey) {
-    toast.error('Private key and public key not found. Please authenticate first.');
-    return null;
-  }
-
-  return (
-    <div className="sidebar">
-      {selectedBlock ? (
-        <>
-          <h2 className="font-bold">Block {selectedBlock.id}</h2>
-          <p className="font-bold">Team: {selectedBlock.team}</p>
-          <br />
-          <BuyButton Block={selectedBlock.id.toString()} publickey={publickey} privatekey={privatekey} />
-        </>
-      ) : (
-        <p>No block selected</p>
-      )}
-    </div>
-  );
-};
 
 const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
   const [selectedBlock, setSelectedBlock] = useState<{ id: number; team: string } | null>(null);
@@ -158,11 +135,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
       <div className="map-container">
         <div id="map" className="map"></div>
       </div>
-      <div className='items-center flex justify-center'>
-        {selectedBlock && (
-          <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
-        )}
-      </div>
+ 
       <BlockDetails selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
     </>
   );

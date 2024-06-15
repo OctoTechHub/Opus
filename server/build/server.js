@@ -17,11 +17,16 @@ const cross_fetch_1 = __importDefault(require("cross-fetch"));
 const stellar_sdk_1 = __importDefault(require("@stellar/stellar-sdk"));
 const axios_1 = __importDefault(require("axios"));
 const cors_1 = __importDefault(require("cors"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const mongoose_2 = __importDefault(require("./mongoose"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static('public'));
 app.use((0, cors_1.default)());
+mongoose_1.default.connect("mongodb+srv://Haard18:Haard1808@cluster0.zuniu39.mongodb.net/stellar")
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
 app.get('/fund-account/:publicKey', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { publicKey } = req.params;
     if (!stellar_sdk_1.default.StrKey.isValidEd25519PublicKey(publicKey)) {
@@ -133,6 +138,53 @@ app.get('/fetch-OpusToken/:publickey', (req, res) => __awaiter(void 0, void 0, v
     }).catch(function (err) {
         console.error("Could not load account!", err);
     });
+}));
+app.post('/buy-block', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const server = new stellar_sdk_1.default.Horizon.Server("https://horizon-testnet.stellar.org");
+    const { publickey, privatekey, blockid } = req.body; // Ensure you have correct key names from the request
+    const userKeypair = stellar_sdk_1.default.Keypair.fromSecret(privatekey);
+    try {
+        const userAccount = yield server.loadAccount(publickey);
+        const xlmBalance = parseFloat(userAccount.balances.find((b) => b.asset_type === 'native').balance);
+        const requiredXlm = stellar_sdk_1.default.BASE_FEE * 2; // Assuming a safety margin, multiply by 2
+        if (xlmBalance < requiredXlm) {
+            throw new Error(`Insufficient XLM balance (${xlmBalance} XLM) to cover the transaction fee.`);
+        }
+        const OpusToken = new stellar_sdk_1.default.Asset("OpusToken", "GCS3RTHPWKFZUHRL7A4VJGGS4JPWU6EOZTHKG25LCTXBVARKUGY6DEFS");
+        const balance = userAccount.balances.find((b) => b.asset_code === "OpusToken" && b.asset_issuer === "GCS3RTHPWKFZUHRL7A4VJGGS4JPWU6EOZTHKG25LCTXBVARKUGY6DEFS");
+        if (!balance || parseFloat(balance.balance) < 0.5) {
+            throw new Error(`Insufficient balance of OpusToken`);
+        }
+        const transaction = new stellar_sdk_1.default.TransactionBuilder(userAccount, {
+            fee: stellar_sdk_1.default.BASE_FEE,
+            networkPassphrase: stellar_sdk_1.default.Networks.TESTNET,
+            sequence: userAccount.sequenceNumber(),
+        })
+            .addOperation(stellar_sdk_1.default.Operation.payment({
+            destination: 'GAXOAKDTMXDPDXTR34ZFANQCIK2EC5WBNRA2AQYJDPXGZQ73COVCVDNJ', // Replace with the recipient's public key
+            asset: OpusToken,
+            amount: '0.5', // Amount of OpusToken to transfer
+        }))
+            .addMemo(stellar_sdk_1.default.Memo.text("Issued Block ID: " + blockid))
+            .setTimeout(30)
+            .build();
+        transaction.sign(userKeypair);
+        const transactionResult = yield server.submitTransaction(transaction);
+        console.log('Transaction successful:', transactionResult);
+        const newTxn = new mongoose_2.default({
+            txnHash: transactionResult.hash,
+            blockId: blockid,
+            Owner: publickey,
+        });
+        yield newTxn.save();
+        console.log('Transaction data saved to MongoDB');
+        return res.send({ message: 'Transaction successful', transaction: transactionResult });
+    }
+    catch (error) {
+        console.error('Transaction failed:', ((_a = error.response) === null || _a === void 0 ? void 0 : _a.data) || error.message);
+        return res.status(500).send({ message: 'Transaction failed', error: ((_b = error.response) === null || _b === void 0 ? void 0 : _b.data) || error.message });
+    }
 }));
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);

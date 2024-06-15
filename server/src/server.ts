@@ -4,12 +4,17 @@ import StellarSdk from '@stellar/stellar-sdk';
 import Server from '@stellar/stellar-sdk';
 import axios from 'axios';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import Txn from './mongoose';
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.static('public'));
 app.use(cors());
+mongoose.connect("mongodb+srv://Haard18:Haard1808@cluster0.zuniu39.mongodb.net/stellar")
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
 app.get('/fund-account/:publicKey', async (req, res) => {
     const { publicKey } = req.params;
 
@@ -132,6 +137,61 @@ app.get('/fetch-OpusToken/:publickey', async (req, res) => {
     });
 
 })
+app.post('/buy-block', async (req, res) => {
+    const server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
+    const { publickey, privatekey, blockid } = req.body; // Ensure you have correct key names from the request
+    const userKeypair = StellarSdk.Keypair.fromSecret(privatekey);
+
+    try {
+        const userAccount = await server.loadAccount(publickey);
+        const xlmBalance = parseFloat(userAccount.balances.find((b:any) => b.asset_type === 'native').balance);
+        const requiredXlm = StellarSdk.BASE_FEE * 2; // Assuming a safety margin, multiply by 2
+
+        if (xlmBalance < requiredXlm) {
+            throw new Error(`Insufficient XLM balance (${xlmBalance} XLM) to cover the transaction fee.`);
+        }
+
+        const OpusToken = new StellarSdk.Asset("OpusToken", "GCS3RTHPWKFZUHRL7A4VJGGS4JPWU6EOZTHKG25LCTXBVARKUGY6DEFS");
+        const balance = userAccount.balances.find((b:any) => b.asset_code === "OpusToken" && b.asset_issuer === "GCS3RTHPWKFZUHRL7A4VJGGS4JPWU6EOZTHKG25LCTXBVARKUGY6DEFS");
+
+        if (!balance || parseFloat(balance.balance) < 0.5) {
+            throw new Error(`Insufficient balance of OpusToken`);
+        }
+
+        const transaction = new StellarSdk.TransactionBuilder(userAccount, {
+            fee: StellarSdk.BASE_FEE,
+            networkPassphrase: StellarSdk.Networks.TESTNET,
+            sequence: userAccount.sequenceNumber(),
+        })
+            .addOperation(StellarSdk.Operation.payment({
+                destination: 'GAXOAKDTMXDPDXTR34ZFANQCIK2EC5WBNRA2AQYJDPXGZQ73COVCVDNJ', // Replace with the recipient's public key
+                asset: OpusToken,
+                amount: '0.5',  // Amount of OpusToken to transfer
+            }))
+            .addMemo(StellarSdk.Memo.text("Issued Block ID: " + blockid))
+            .setTimeout(30)
+            .build();
+
+        transaction.sign(userKeypair);
+        const transactionResult = await server.submitTransaction(transaction);
+        console.log('Transaction successful:', transactionResult);
+
+        const newTxn = new Txn({
+            txnHash: transactionResult.hash,
+            blockId: blockid,
+            Owner: publickey,
+        });
+
+        await newTxn.save();
+        console.log('Transaction data saved to MongoDB');
+
+        return res.send({ message: 'Transaction successful', transaction: transactionResult });
+    }
+    catch (error:any) {
+        console.error('Transaction failed:', error.response?.data || error.message);
+        return res.status(500).send({ message: 'Transaction failed', error: error.response?.data || error.message });
+    }
+});
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
 });

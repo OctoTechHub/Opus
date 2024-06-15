@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'react-toastify/dist/ReactToastify.css';
 import StellarSdk from 'stellar-sdk';
 import './OpusMap.css';
 import BuyButton from './BuyButton';
@@ -12,14 +14,21 @@ interface OpusMapProps {
 }
 
 const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string }, onBuy: (id: number) => void }) => {
-  const publickey=localStorage.getItem("publickey");
-  const privatekey=localStorage.getItem("privatekey");
-  const blockid=selectedBlock.id.toString()
+  const publickey = localStorage.getItem("publickey");
+  const privatekey = localStorage.getItem("privatekey");
+  const blockid = selectedBlock.id.toString();
+
+  if (!publickey || !privatekey) {
+    toast.error('Private key and public key not found. Please authenticate first.');
+    return null;
+  }
+
   return (
-    <div className="sidebar ">
-      <h2>Block {selectedBlock.id}</h2>
-      <p>Team: {selectedBlock.team}</p>
-      <BuyButton Block={blockid} publickey={publickey} privatekey={privatekey}/>
+    <div className="sidebar">
+      <h2 className="font-bold">Block {selectedBlock.id}</h2>
+      <p className="font-bold">Team: {selectedBlock.team}</p>
+      <br></br>
+      <BuyButton Block={blockid} publickey={publickey} privatekey={privatekey} />
     </div>
   );
 };
@@ -53,11 +62,28 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
         [lat, lng],
         [lat + blockSize, lng + blockSize]
       ];
+      const color = getTeamColor(team);
       const block = L.rectangle(bounds, {
-        fillOpacity: 0.3,
+        fillOpacity: 0.8,
+        color: color,
         className: team
       }).addTo(map);
       block.on('click', () => handleBlockClick(id, team));
+    }
+
+    function getTeamColor(team: string) {
+      switch (team) {
+        case 'Hufflepuff':
+          return 'orange';
+        case 'Gryffindor':
+          return 'red';
+        case 'RavenClaw':
+          return 'blue';
+        case 'Slytherin':
+          return 'green';
+        default:
+          return 'gray';
+      }
     }
 
     function handleBlockClick(id: number, team: string) {
@@ -74,7 +100,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
     }
 
     function getRandomTeam() {
-      const teams = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'RavenClaw', 'Yates'];
+      const teams = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'RavenClaw'];
       return teams[Math.floor(Math.random() * teams.length)];
     }
 
@@ -94,7 +120,10 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
   }, []);
 
   const handleBuyBlock = async (id: number) => {
-    if (privateKey) {
+    const privateKey = localStorage.getItem("privatekey");
+    const publicKey = localStorage.getItem("publickey");
+
+    if (privateKey && publicKey) {
       try {
         await allocateBlockID(id.toString(), privateKey, 'NewDollar', 'GA2XMHHFMN3NDSG5BLQYTDIYFYHBRQFYJ4DZKKBI7JDVIVPIVHVNA2ND', '10');
         setOwnership(prevOwnership => ({
@@ -110,27 +139,24 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
         }
       } catch (error: any) {
         console.error('Transaction failed:', error.response?.data || error.message);
-        alert('Transaction failed');
+        toast.error('Transaction failed');
       }
     } else {
-      alert('Authentication failed');
+      toast.error('Authentication failed: Private key and Public key not found');
     }
   };
 
   return (
     <>
-    <div className="map-container">
-      <div id="map" className="map"></div>
-      <div className='mt-10'>
-        
+      <ToastContainer />
+      <div className="map-container">
+        <div id="map" className="map"></div>
       </div>
-    </div>
-    
-    <div className='items-center flex justify-center'>
-          {selectedBlock && (
-            <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
-          )}
-        </div>  
+      <div className='items-center flex justify-center'>
+        {selectedBlock && (
+          <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
+        )}
+      </div>  
     </>
   );
 };

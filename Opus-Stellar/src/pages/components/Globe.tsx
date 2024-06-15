@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Globe from 'react-globe.gl';
-
+import './GlobeComponent.css'; 
 const GlobeComponent: React.FC = () => {
   const [arcsData, setArcsData] = useState<any[]>([]);
+  const [title, setTitle] = useState<string>('Welcome to Opus-Stellar!');
 
   useEffect(() => {
     const N = 80;
@@ -17,8 +18,10 @@ const GlobeComponent: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <h1>My Globe Component</h1>
+    <div className="globe-container">
+      <div className="globe-title">
+        {title}
+      </div>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
         arcsData={arcsData}
@@ -27,7 +30,7 @@ const GlobeComponent: React.FC = () => {
         arcDashGap={() => Math.random()}
         arcDashAnimateTime={() => Math.random() * 4000 + 500}
       />
-    </>
+    </div>
   );
 };
 

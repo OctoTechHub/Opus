@@ -1,0 +1,63 @@
+/* BlockDetails.css */
+
+.block-details {
+    width: 100%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .block-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .block-details p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .block-details img {
+    max-width: 15vw;
+    height: 15vw;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    margin-left: 11vw;
+  }
+  
+  .block-details button {
+    width: 100px;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    background-color: white;
+  }
+  
+  .block-details button.buy {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .block-details button.sell {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .block-details button.buy:hover {
+    background-color: #45a049;
+  }
+  
+  .block-details button.sell:hover {
+    background-color: #e53935;
+  }
+  
+  .block-details button:active {
+    transform: scale(0.98);
+  }
+  

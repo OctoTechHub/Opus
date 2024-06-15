@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,64 +46,59 @@ const Navbar = () => {
   return (
     <nav className="bg-black text-white shadow-md py-4">
       <ToastContainer />
-      <div className="container border-b w-screen px-4">
+      <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold text-white">
+          <Link to="/" className="text-2xl font-bold font-mono text-white">
             Stellar App
           </Link>
           {location.pathname === '/' && (
-            <div >
-              <button onClick={()=>{
-                navigate('/create')
-
-              }} className="px-2 rounded-lg bg-amber-600 text-white py-2">
-                Join Opus-Stellar
-              </button>
-            </div>
+            <button
+              onClick={() => navigate('/create')}
+              className="bg-orange-500 hover:bg-orange-700 text-white font-bold font-mono py-2 px-4 rounded"
+            >
+              Join Opus-Stellar
+            </button>
           )}
-          {location.pathname !== '/' && (
+          {location.pathname !== '/' && location.pathname !== '/create' && (
             <div className="relative">
               <button
-                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-orange-500 hover:bg-orange-700 text-white font-mono font-bold py-2 px-4 rounded focus:outline-none"
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
               >
                 Profile
               </button>
               {showProfileDropdown && (
                 <div
-                  className="absolute right-0 mt-2 w-80 bg-white rounded shadow-md py-2 border border-gray-200"
+                  className="absolute right-0 mt-2 w-56 bg-white rounded shadow-md py-2 border border-gray-200"
                   onClick={() => setShowProfileDropdown(false)}
                 >
                   <div className="px-4 py-2">
                     <p
-                      className="text-gray-800 cursor-pointer"
+                      className="text-gray-800 cursor-pointer hover:text-blue-500 font-mono"
                       onClick={() => handleCopyToClipboard(publicKey, 'Public Key')}
                     >
                       👥 Public Key: ************
                     </p>
                   </div>
-                  <div className="border-t border-gray-200 mt-2"></div>
-                  <div className="px-4 py-2">
+                  <div className="px-4 py-2 border-t border-gray-200">
                     <p
-                      className="text-gray-800 cursor-pointer"
+                      className="text-gray-800 cursor-pointer hover:text-blue-500 font-mono"
                       onClick={() => handleCopyToClipboard(privateKey, 'Private Key')}
                     >
                       🔑 Private Key: ************
                     </p>
                   </div>
-                  <div className="border-t border-gray-200 mt-2"></div>
-                  <div className="px-4 py-2">
-                    <p className="text-gray-800">
-                      🪙 OP Tokens Bought: {optokens}
-                    </p>
+                  <div className="px-4 py-2 border-t border-gray-200">
+                    <p className="text-gray-800 font-mono">🪙 OP Tokens: {optokens}</p>
                   </div>
-                  <div className="border-t border-gray-200 mt-2"></div>
-                  <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full mt-2"
-                    onClick={handleLogout}
-                  >
-                    Log out
-                  </button>
+                  <div className="px-4 py-2 border-t border-gray-200">
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full font-mono"
+                      onClick={handleLogout}
+                    >
+                      Log out
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -113,5 +108,6 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 export default Navbar;

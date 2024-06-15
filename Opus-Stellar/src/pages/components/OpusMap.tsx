@@ -7,16 +7,16 @@ import StellarSdk from 'stellar-sdk';
 import './OpusMap.css';
 import BuyButton from './BuyButton';
 import allocateBlockID from '../utils/allocateBlockID';
+import BlockDetails from './BlockDetailsProps';
 
 interface OpusMapProps {
   publicKey: string;
-  privateKey: string; 
+  privateKey: string;
 }
 
-const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string }, onBuy: (id: number) => void }) => {
+const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string } | null, onBuy: (id: number) => void }) => {
   const publickey = localStorage.getItem("publickey");
   const privatekey = localStorage.getItem("privatekey");
-  const blockid = selectedBlock.id.toString();
 
   if (!publickey || !privatekey) {
     toast.error('Private key and public key not found. Please authenticate first.');
@@ -25,10 +25,16 @@ const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: 
 
   return (
     <div className="sidebar">
-      <h2 className="font-bold">Block {selectedBlock.id}</h2>
-      <p className="font-bold">Team: {selectedBlock.team}</p>
-      <br></br>
-      <BuyButton Block={blockid} publickey={publickey} privatekey={privatekey} />
+      {selectedBlock ? (
+        <>
+          <h2 className="font-bold">Block {selectedBlock.id}</h2>
+          <p className="font-bold">Team: {selectedBlock.team}</p>
+          <br />
+          <BuyButton Block={selectedBlock.id.toString()} publickey={publickey} privatekey={privatekey} />
+        </>
+      ) : (
+        <p>No block selected</p>
+      )}
     </div>
   );
 };
@@ -156,7 +162,8 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
         {selectedBlock && (
           <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
         )}
-      </div>  
+      </div>
+      <BlockDetails selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
     </>
   );
 };

@@ -13,7 +13,7 @@ const BuyButton=({Block,publickey,privatekey}:{Block:String,publickey:String|nul
   }
     return(
       <div>
-        <button className="buy-button" onClick={() => onBuy(Block)}>Buy Block</button>
+        <button className="buy-button " onClick={() => onBuy(Block)}>Buy Block</button>
       </div>
     )
 }

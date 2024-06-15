@@ -69,18 +69,18 @@ const StellarAccountCreation = () => {
     <Navbar/>
     <div className="flex justify-center w-screen bg-gradient-to-br from-gray-800 to-black items-center h-screen">
       <ToastContainer /> 
-      <div className="flex bg-blue-600 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
-        <h1 className="text-4xl font-bold">Opus-Stellar 
+      <div className="flex bg-gradient-to-br from-gray-700 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
+        <h1 className="text-4xl font-bold font-mono">Opus-Stellar 
         <svg xmlns="Opus-Stellar\src\assets\saturn-svgrepo-com.svg" className="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor"> </svg>
         </h1>
-        <p className="text-2xl font-bold">Claim Your Virtual Territory Today!</p>
+        <p className="text-2xl font-bold font-mono">Claim Your Virtual Territory Today!</p>
         <input
           autoComplete="off"
           onChange={(e) => handlechange(e, 'publickey')}
           id="publickey"
           type="text"
           placeholder="Enter Public Key"
-          className="px-3 py-2 text-black bg-white rounded-lg"
+          className="px-3 py-2 text-black bg-white rounded-lg font-mono"
         />
         <input
           autoComplete="off"
@@ -88,20 +88,20 @@ const StellarAccountCreation = () => {
           id="privatekey"
           type="text"
           placeholder="Enter Private Key"
-          className="px-3 py-2 bg-white text-black rounded-lg"
+          className="px-3 py-2 bg-white text-black rounded-lg font-mono"
         />
         <button
           onClick={handleSubmit}
-          className="px-2 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 transition duration-200"
+          className="px-2 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono"
         >
           Enter the Opus World
         </button>
         {generated && (
           <div className="text-wrap">
-            <p>
+            <p className="font-mono">
               <strong>Public Key:</strong> 
               <span
-                className="ml-2 cursor-pointer text-gray-200"
+                className="ml-2 cursor-pointer text-gray-200 font-mono"
                 onClick={() => {
                   copyToClipboardAndShowToast(publickey);
                 }}
@@ -109,12 +109,12 @@ const StellarAccountCreation = () => {
                 {publickey}
               </span>
             </p>
-            <p>
+            <p className="font-mono">
               <strong>Private Key:</strong>
               <span
-                className="ml-2 cursor-pointer text-gray-200"
+                className="ml-2 cursor-pointer text-gray-200 font-mono"
                 onClick={() => {
-                  copyToClipboardAndShowToast(privatekey);
+                 copyToClipboardAndShowToast(privatekey);
                 }}
               >
                 {privatekey}
@@ -122,18 +122,18 @@ const StellarAccountCreation = () => {
             </p>
             <button
               onClick={handledownloadclick}
-              className="px-2 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 transition duration-200 mt-4"
+              className="px-2 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 mt-4 font-mono"
             >
               Download Your Keys
             </button>
           </div>
         )}
         {!generated && (
-          <div className="text-semibold mt-4 text-white">
+          <div className="text-semibold mt-4 text-white font-mono">
             New to Opus? Create an Account
             <button
               onClick={handleGenerate}
-              className="ml-2 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-900 transition duration-200 text-sm"
+              className="ml-2 px-2 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 text-sm font-mono"
             >
               Join Today
             </button>

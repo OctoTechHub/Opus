@@ -20,11 +20,11 @@ const GlobeComponent: React.FC = () => {
   return (
     <div className="globe-container">
       <div className="globe-title text-center ">
-        <p className='text-3xl'>
+        <p className='text-6xl font-mono'>
 
           {title}
         </p>
-        <p className='text-md '>Enter into the World of Virtual Estate</p>
+        <p className='text-2xl font-semibold mt-4 font-mono'>Enter into the World of Virtual Estate</p>
       </div>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"

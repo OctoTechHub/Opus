@@ -10,10 +10,8 @@ const PaymentComponent = ({ publicKey }: { publicKey: string }) => {
     try {
       const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-      // Load receiving account
       const receivingAccount = await server.loadAccount(publicKey);
 
-      // Build transaction
       const transaction = new StellarSdk.TransactionBuilder(receivingAccount, {
         fee: StellarSdk.BASE_FEE,
         networkPassphrase: StellarSdk.Networks.TESTNET,

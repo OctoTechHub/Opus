@@ -3,12 +3,19 @@ import { blockImages } from './blockImages';
 import './blockdetails.css';
 
 interface BlockDetailsProps {
-  selectedBlock: { id: number; team: string };
+  selectedBlock: { id: number; team: string } | null;
   onBuy: (id: number) => void;
-  alert :"hello";
 }
 
 const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock, onBuy }) => {
+  if (!selectedBlock) {
+    return (
+      <div className="block-details">
+        <p>No block selected</p>
+      </div>
+    );
+  }
+
   const blockImage = blockImages[selectedBlock.team];
 
   return (

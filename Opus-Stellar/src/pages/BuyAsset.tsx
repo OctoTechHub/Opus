@@ -110,23 +110,25 @@ const BuyAsset = () => {
       <Navbar />
       <div className="flex justify-center w-screen bg-gradient-to-br from-gray-800 to-black items-center h-screen">
         <ToastContainer />
-        <div className="flex bg-blue-600 px-10 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
-          <p className="text-4xl font-semibold">Manage Your Account Purchase OP Tokens</p>
-          <p className="text-4xl font-semibold">Purchase OP Tokens</p>
-          <p className="text-xl font-semibold">Rate of OP Token: 1 OP = 1 XLM</p>
+        <div className="flex bg-gradient-to-br from-gray-800 to-black px-10 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
+          <p className="text-4xl font-semibold font-mono">Manage Your Account Purchase OP Tokens</p>
+          <p className="text-4xl font-semibold font-mono">Purchase OP Tokens</p>
+          <div className="mt-8 px-2 py-2 rounded-lg bg-slate-900  to-black text-white rounded-lg p-4 mb-4 font-mono">
+            <p className="text-xl font-semibold font-mono">OP Token Balance: {opTokens}</p>
+          </div>          
           <div className="flex justify-between items-center w-full mt-8">
             <button
               disabled={funded}
               onClick={fundAccount}
-              className={`px-4 py-2 rounded-lg bg-slate-800 ${funded ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 ${funded? "opacity-50 cursor-not-allowed" : ""} font-mono`}
             >
-              {funding ? "Funding..." : "Fund Your Account"}
+              {funding? "Funding..." : "Fund Your Account"}
             </button>
             <button
               onClick={fetchAccountDetails}
-              className="px-4 py-2 rounded-lg bg-slate-800"
+              className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono"
             >
-              {fetchLoading ? "Loading..." : `Check Balance ${balance !== null ? `: ${balance}` : "XLM"}`}
+              {fetchLoading? "Loading..." : `Check Balance ${balance!== null? `: ${balance}` : "XLM"}`}
             </button>
           </div>
           <div className="flex gap-2 justify-center w-full mt-4">
@@ -135,40 +137,38 @@ const BuyAsset = () => {
               placeholder="Enter number of tokens"
               value={numTokens}
               onChange={(e) => setNumTokens(e.target.value)}
-              className="px-2 py-2 rounded-lg bg-slate-800 w-full"
+              className="px-2 py-2 rounded-lg bg-slate-800 w-full font-mono"
             />
-            <button onClick={buyTokens} className="px-4 py-2 rounded-lg bg-slate-800">
+            <button onClick={buyTokens} className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono">
               Buy Tokens
             </button>
           </div>
           <div className="flex justify-center w-full mt-4">
             <button
               onClick={handleBuyLand}
-              className="px-4 py-2 rounded-lg bg-slate-800"
+              className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono"
             >
               Buy Land
             </button>
           </div>
           
           <div className="mt-8">
-            <div className="px-2 py-2 rounded-lg bg-slate-900  to-black text-white rounded-lg p-4 mb-4">
-              <p className="text-xl font-semibold">Transaction History:</p>
+            <div className="px-2 py-2 rounded-lg bg-slate-900  to-black text-white rounded-lg p-4 mb-4 font-mono">
+              <p className="text-xl font-semibold font-mono">Transaction History:</p>
             </div>
             <div className="overflow-y-auto max-h-40">
               {transactions.map((transaction) => (
-                <div key={transaction.id} className="border rounded-md p-2 mb-2">
-                  <p className="text-sm">ID: {transaction.id}</p>
-                  <p className="text-sm">Type: {transaction.type}</p>
-                  <p className="text-sm">Created At: {transaction.created_at}</p>
-                  <p className="text-sm">Amount: {transaction.amount}</p>
+                <div key={transaction.id} className="border rounded-md p-2 mb-2 font-mono">
+                  <p className="text-sm font-mono">ID: {transaction.id}</p>
+                  <p className="text-sm font-mono">Type: {transaction.type}</p>
+                  <p className="text-sm font-mono">Created At: {transaction.created_at}</p>
+                  <p className="text-sm font-mono">Amount: {transaction.amount}</p>
                 </div>
               ))}
             </div>
           </div>
           
-          <div className="mt-8">
-            <p className="text-xl font-semibold">OP Token Balance: {opTokens}</p>
-          </div>
+
         </div>
       </div>
     </>
@@ -176,3 +176,4 @@ const BuyAsset = () => {
 };
 
 export default BuyAsset;
+

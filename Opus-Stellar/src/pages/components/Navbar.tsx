@@ -7,23 +7,29 @@ const Navbar = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [publicKey, setPublicKey] = useState('');
   const [privateKey, setPrivateKey] = useState('');
+  const [optokens, setOptokens] = useState(0); 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     const storedPublicKey = localStorage.getItem('publickey');
     const storedPrivateKey = localStorage.getItem('privatekey');
+    const storedOptokens = localStorage.getItem('optokens'); 
     if (storedPublicKey) {
       setPublicKey(storedPublicKey);
     }
     if (storedPrivateKey) {
       setPrivateKey(storedPrivateKey);
     }
+    if (storedOptokens) {
+      setOptokens(parseInt(storedOptokens, 10)); 
+    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('publickey');
     localStorage.removeItem('privatekey');
+    localStorage.removeItem('optokens'); 
     navigate('/');
   };
 
@@ -73,6 +79,12 @@ const Navbar = () => {
                       onClick={() => handleCopyToClipboard(privateKey, 'Private Key')}
                     >
                       🔑 Private Key: ************
+                    </p>
+                  </div>
+                  <div className="border-t border-gray-200 mt-2"></div>
+                  <div className="px-4 py-2">
+                    <p className="text-gray-800">
+                      🪙 OP Tokens Bought: {optokens}
                     </p>
                   </div>
                   <div className="border-t border-gray-200 mt-2"></div>

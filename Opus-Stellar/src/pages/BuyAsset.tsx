@@ -10,16 +10,17 @@ const BuyAsset = () => {
   const privateKey = localStorage.getItem("privatekey");
   const [fetchLoading, setFetchLoading] = useState(false);
   const [balance, setBalance] = useState<number | null>(null);
+  const [opTokens, setOpTokens] = useState<number>(0); 
   const [funding, setFunding] = useState(false);
   const [funded, setFunded] = useState(false);
   const [numTokens, setNumTokens] = useState<string>("");
-  const [transactions, setTransactions] = useState<any[]>([]); // State to store transactions
+  const [transactions, setTransactions] = useState<any[]>([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch initial account details and transaction history on component mount
     fetchAccountDetails();
     fetchTransactions();
+    fetchOpTokenBalance();
   }, []);
 
   const fetchAccountDetails = async () => {
@@ -32,7 +33,6 @@ const BuyAsset = () => {
       setBalance(response.data.balances[0].balance);
     } catch (error) {
       console.error("Error fetching account details:", error);
-      toast.error("Failed to fetch account details. Please try again.");
     } finally {
       setFetchLoading(false);
     }
@@ -69,8 +69,12 @@ const BuyAsset = () => {
         amount: numTokens
       });
       console.log(response.data);
+      const boughtTokens = parseInt(numTokens, 10); 
+      const updatedOpTokens = opTokens + boughtTokens; 
+      setOpTokens(updatedOpTokens); 
+      localStorage.setItem("optokens", updatedOpTokens.toString()); 
       toast.success(`Successfully bought ${numTokens} OP tokens!`);
-      fetchTransactions(); // Fetch transactions after buying tokens
+      fetchTransactions(); 
     } catch (error) {
       console.error("Error buying tokens:", error);
       toast.error("Failed to buy tokens. Please try again.");
@@ -81,10 +85,19 @@ const BuyAsset = () => {
     try {
       const response = await axios.get(`https://horizon-testnet.stellar.org/accounts/${publicKey}/transactions`);
       console.log(response.data);
-      setTransactions(response.data._embedded.records);
+      const filteredTransactions = response.data._embedded.records.filter((transaction: { source_account: string | null; }) => {
+        return transaction.source_account === publicKey;
+      });
+      setTransactions(filteredTransactions);
     } catch (error) {
       console.error("Error fetching transactions:", error);
-      toast.error("Failed to fetch transactions. Please try again.");
+    }
+  };
+
+  const fetchOpTokenBalance = () => {
+    const storedOpTokens = localStorage.getItem("optokens");
+    if (storedOpTokens) {
+      setOpTokens(parseInt(storedOpTokens, 10));
     }
   };
 
@@ -151,6 +164,10 @@ const BuyAsset = () => {
                 </div>
               ))}
             </div>
+          </div>
+          
+          <div className="mt-8">
+            <p className="text-xl font-semibold">OP Token Balance: {opTokens}</p>
           </div>
         </div>
       </div>

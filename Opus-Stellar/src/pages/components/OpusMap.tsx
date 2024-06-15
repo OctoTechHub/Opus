@@ -8,12 +8,12 @@ import allocateBlockID from '../utils/allocateBlockID';
 
 interface OpusMapProps {
   publicKey: string;
-  privateKey: string; // Changed from secretKey to privateKey
+  privateKey: string; 
 }
 
 const Sidebar = ({ selectedBlock, onBuy }: { selectedBlock: { id: number; team: string }, onBuy: (id: number) => void }) => {
   return (
-    <div className="sidebar">
+    <div className="sidebar ">
       <h2>Block {selectedBlock.id}</h2>
       <p>Team: {selectedBlock.team}</p>
       <BuyButton/>
@@ -71,7 +71,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
     }
 
     function getRandomTeam() {
-      const teams = ['avengers', 'xmen', 'spiderman', 'ironman', 'captainamerica'];
+      const teams = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'RavenClaw', 'Yates'];
       return teams[Math.floor(Math.random() * teams.length)];
     }
 
@@ -115,16 +115,20 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
   };
 
   return (
+    <>
     <div className="map-container">
       <div id="map" className="map"></div>
       <div className='mt-10'>
-        <div className='items-end'>
+        
+      </div>
+    </div>
+    
+    <div className='items-center flex justify-center'>
           {selectedBlock && (
             <Sidebar selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
           )}
         </div>  
-      </div>
-    </div>
+    </>
   );
 };
 

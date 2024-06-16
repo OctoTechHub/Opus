@@ -5,6 +5,7 @@ import StellarAccountCreation from './pages/StellarAcountCreation';
 import BuyAsset from './pages/BuyAsset';
 import BuyLand from './pages/BuyLand';
 import Transaction from './pages/Transactions';
+import Invoice from './pages/components/Invoice';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/buyAsset" element={<BuyAsset/>} />
         <Route path="/buyLand" element={<BuyLand  />}/>
         <Route path="/transactions" element={<Transaction />} />
+        <Route path="/invoice" element={<Invoice publickey='GAXOAKDTMXDPDXTR34ZFANQCIK2EC5WBNRA2AQYJDPXGZQ73COVCVDNJ' blockid='1' transactionhash='adnsakndkansdkasnknaksnda' team='Hufflepuff'/>}/>
       </Routes>
     </Router>
   );

@@ -116,13 +116,13 @@ const BuyAsset = () => {
             <button
               disabled={funded}
               onClick={fundAccount}
-              className={`px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 ${funded? "opacity-50 cursor-not-allowed" : ""} font-mono`}
+              className={`px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-700  transition duration-200 ${funded? "opacity-50 cursor-not-allowed" : ""} font-mono`}
             >
               {funding? "Funding..." : "Fund Your Account"}
             </button>
             <button
               onClick={fetchAccountDetails}
-              className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono"
+              className="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-700  transition duration-200 font-mono"
             >
               {fetchLoading? "Loading..." : `Check Balance ${balance!== null? `: ${balance}` : "XLM"}`}
             </button>
@@ -135,14 +135,14 @@ const BuyAsset = () => {
               onChange={(e) => setNumTokens(e.target.value)}
               className="px-2 py-2 rounded-lg bg-slate-800 w-full font-mono"
             />
-            <button onClick={buyTokens} className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono">
+            <button onClick={buyTokens} className="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-700  transition duration-200 font-mono">
               Buy Tokens
             </button>
           </div>
           <div className="flex justify-center w-full mt-4">
             <button
               onClick={handleBuyLand}
-              className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono"
+              className="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-700   transition duration-200 font-mono"
             >
               Buy Land
             </button>

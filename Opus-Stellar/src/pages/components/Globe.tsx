@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Globe from 'react-globe.gl';
 import './GlobeComponent.css';
+
 const GlobeComponent: React.FC = () => {
   const [arcsData, setArcsData] = useState<any[]>([]);
-  const [title, setTitle] = useState<string>('Welcome to Opus-Stellar!');
+  const [title] = useState<string>('Welcome to Opus-Stellar!');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const N = 80;
@@ -17,14 +20,21 @@ const GlobeComponent: React.FC = () => {
     setArcsData(data);
   }, []);
 
+  const handleGetStarted = () => {
+    navigate('/create');
+  };
+
   return (
     <div className="globe-container">
       <div className="globe-title text-center ">
         <p className='text-6xl font-mono'>
-
           {title}
         </p>
         <p className='text-2xl font-semibold mt-4 font-mono'>Enter into the World of Virtual Estate</p>
+        <button className="bg-orange-500 hover:bg-orange-700 text-white font-mono py-2 px-4 mt-4 rounded"
+                onClick={handleGetStarted}>
+          Get Started Today
+        </button>
       </div>
       <Globe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"

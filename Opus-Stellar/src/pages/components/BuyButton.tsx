@@ -36,7 +36,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ Block, publickey, privatekey }) =
   return (
     <div className="text-white">
       <button
-        className="buy-button bg-slate-800 font-bold px-4 py-2 rounded text-black hover:bg-gray-400"
+        className="buy-button bg-orange-500 hover:bg-orange-500 font-bold px-4 py-2 rounded text-black \"
         onClick={() => onBuy(Block)}
         style={{ width: '150px' }}
       >

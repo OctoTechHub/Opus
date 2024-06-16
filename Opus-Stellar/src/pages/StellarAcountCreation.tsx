@@ -92,7 +92,7 @@ const StellarAccountCreation = () => {
         />
         <button
           onClick={handleSubmit}
-          className="px-2 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 font-mono"
+          className="px-2 py-2 rounded-lg bg-orange-500 hover:bg-orange-700  transition duration-200 font-mono"
         >
           Enter the Opus World
         </button>
@@ -122,7 +122,7 @@ const StellarAccountCreation = () => {
             </p>
             <button
               onClick={handledownloadclick}
-              className="px-2 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 mt-4 font-mono"
+              className="px-2 py-2 rounded-lg bg-orange-500 hover:bg-orange-700  transition duration-200 mt-4 font-mono"
             >
               Download Your Keys
             </button>
@@ -133,7 +133,7 @@ const StellarAccountCreation = () => {
             New to Opus? Create an Account
             <button
               onClick={handleGenerate}
-              className="ml-2 px-2 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 transition duration-200 text-sm font-mono"
+              className="ml-2 px-2 py-1 rounded-lg bg-orange-500 hover:bg-orange-700     transition duration-200 text-sm font-mono"
             >
               Join Today
             </button>

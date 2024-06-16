@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,6 +43,9 @@ const Navbar = () => {
     }
   };
 
+  // Check if public and private keys are recognized
+  const isKeysRecognized = publicKey && privateKey;
+
   return (
     <nav className="bg-black text-white shadow-md py-4">
       <ToastContainer />
@@ -59,7 +62,7 @@ const Navbar = () => {
               See Live Transactions
             </button>
           )}
-          {location.pathname !== '/' && location.pathname !== '/create' && (
+          {isKeysRecognized && location.pathname !== '/' && location.pathname !== '/create' && (
             <div className="relative">
               <button
                 className="bg-orange-500 hover:bg-orange-700 text-white font-mono font-bold py-2 px-4 rounded focus:outline-none"
@@ -108,6 +111,5 @@ const Navbar = () => {
     </nav>
   );
 };
-
 
 export default Navbar;

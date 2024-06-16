@@ -97,7 +97,6 @@ app.post('/buy-tokens', async (req, res) => {
         await server.submitTransaction(transaction);
         console.log("Trustline created successfully");
 
-        // Load the buyer's account again and create a buy offer
         const updatedBuyerAccount = await server.loadAccount(buyerKeys.publicKey());
         transaction = new StellarSdk.TransactionBuilder(updatedBuyerAccount, {
             fee: StellarSdk.BASE_FEE,
@@ -107,8 +106,8 @@ app.post('/buy-tokens', async (req, res) => {
                 StellarSdk.Operation.manageBuyOffer({
                     selling: StellarSdk.Asset.native(),
                     buying: OpusToken,
-                    buyAmount: amount, // Amount of OpusToken to buy
-                    price: "10", // Price in XLM per OpusToken
+                    buyAmount: amount, 
+                    price: "10", 
                 })
             )
             .setTimeout(100)

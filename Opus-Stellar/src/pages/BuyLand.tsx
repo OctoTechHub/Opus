@@ -26,7 +26,7 @@ const BuyLand = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-gradient-to-br from-gray-800 to-black rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
+      <div className="bg-gradient-to-br from-gray-800 to-black px-5 py-10 gap-5 justify-center flex-col text-center">
         <div className="bg-gradient-to-br from-gray-800 to-black  p-6 rounded-lg shadow-lg">
         <div className="mt-8  py-2 rounded-lg bg-slate-900  to-black text-white font-mono">
           <h2 className="text-3xl font-bold  text-center text-white font-mono">Buy Opus Land 🌴</h2> </div>

@@ -108,9 +108,9 @@ const BuyAsset = () => {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center w-screen bg-gradient-to-br from-gray-800 to-black items-center h-screen">
+      <div className="flex justify-center w-screen bg-gradient-to-br from-gray-800 to-black items-center ">
         <ToastContainer />
-        <div className="flex bg-gradient-to-br from-gray-800 to-black px-10 text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
+        <div className="flex bg-gradient-to-br from-gray-800 to-black px-10  text-white rounded-lg px-5 py-10 gap-5 justify-center flex-col text-center">
           <p className="text-4xl font-semibold font-mono">Manage Your Account Purchase OP Tokens</p>
           <p className="text-4xl font-semibold font-mono">Purchase OP Tokens</p>
           <div className="mt-8 px-2 py-2 rounded-lg bg-slate-900  to-black text-white rounded-lg p-4 mb-4 font-mono">

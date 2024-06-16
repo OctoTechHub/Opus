@@ -26,35 +26,38 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
   });
 
   useEffect(() => {
-    const map = L.map('map').setView([40.7128, -74.0060], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(map);
+    const map = L.map('map').setView([22.30992420772124, 73.179856870333], 4);
+    var Stadia_StamenWatercolor = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg', {
+      minZoom: 1,
+      maxZoom: 16,
+      attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    Stadia_StamenWatercolor.addTo(map);
 
     const blockSize = 0.001;
-    const blocksBounds: L.LatLngBoundsLiteral = [[40.70, -74.02], [40.75, -73.97]];
-
+    const blocksBounds: L.LatLngBoundsLiteral = [[22.30992420772124, 73.179856870333], [22.50992420772124, 73.379856870333]];
     const mask = L.rectangle(blocksBounds, {
       fillOpacity: 0,
       weight: 0,
       interactive: false,
     }).addTo(map);
 
-    function createBlock(lat: number, lng: number, id: number, team: string) {
+    function createBlock(lat:any, lng:any, id:any, team:any) {
       const bounds: L.LatLngBoundsLiteral = [
         [lat, lng],
         [lat + blockSize, lng + blockSize]
       ];
       const color = getTeamColor(team);
       const block = L.rectangle(bounds, {
-        fillOpacity: 0.8,
+        fillOpacity: 0.4,
         color: color,
+        weight:2,
         className: team
       }).addTo(map);
       block.on('click', () => handleBlockClick(id, team));
     }
 
-    function getTeamColor(team: string) {
+    function getTeamColor(team:string) {
       switch (team) {
         case 'Hufflepuff':
           return 'orange';
@@ -69,13 +72,13 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
       }
     }
 
-    function handleBlockClick(id: number, team: string) {
+    function handleBlockClick(id:any, team:any) {
       setSelectedBlock({ id, team });
     }
 
     let id = 1;
-    for (let lat = 40.70; lat < 40.75; lat += blockSize) {
-      for (let lng = -74.02; lng < -73.97; lng += blockSize) {
+    for (let lat = 22.305; lat < 22.325; lat += blockSize) {
+      for (let lng = 73.175; lng < 73.225; lng += blockSize) {
         const team = getRandomTeam();
         createBlock(lat, lng, id, team);
         id++;
@@ -135,7 +138,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
       <div className="map-container">
         <div id="map" className="map"></div>
       </div>
- 
+
       <BlockDetails selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
     </>
   );

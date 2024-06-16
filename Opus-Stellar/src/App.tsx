@@ -16,7 +16,7 @@ function App() {
         <Route path="/buyAsset" element={<BuyAsset/>} />
         <Route path="/buyLand" element={<BuyLand  />}/>
         <Route path="/transactions" element={<Transaction />} />
-        <Route path="/invoice" element={<Invoice publickey='GAXOAKDTMXDPDXTR34ZFANQCIK2EC5WBNRA2AQYJDPXGZQ73COVCVDNJ' blockid='1' transactionhash='adnsakndkansdkasnknaksnda' team='Hufflepuff'/>}/>
+        <Route path='/invoice' element={<Invoice />} />
       </Routes>
     </Router>
   );

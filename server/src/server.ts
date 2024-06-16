@@ -146,14 +146,14 @@ app.get('/fetch-OpusToken/:publickey', async (req, res) => {
 })
 app.post('/buy-block', async (req, res) => {
     const server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
+    console.log(req.body)
     const { publickey, privatekey, blockid } = req.body; // Ensure you have correct key names from the request
     const userKeypair = StellarSdk.Keypair.fromSecret(privatekey);
-
     try {
         const userAccount = await server.loadAccount(publickey);
         const xlmBalance = parseFloat(userAccount.balances.find((b:any) => b.asset_type === 'native').balance);
         const requiredXlm = StellarSdk.BASE_FEE * 2; // Assuming a safety margin, multiply by 2
-
+        // 100strops
         if (xlmBalance < requiredXlm) {
             throw new Error(`Insufficient XLM balance (${xlmBalance} XLM) to cover the transaction fee.`);
         }

@@ -38,7 +38,7 @@ const BuyLand = () => {
             <div className="w-full max-w-screen-lg">
               <OpusMap publicKey={publicKey} privateKey={privateKey} />
             </div>
-            <div className=""></div>
+            
           </div>
         </div>
       </div>

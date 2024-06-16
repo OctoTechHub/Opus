@@ -6,8 +6,12 @@ import Hufflepuff from "../Images/Hufflepuff.jpeg";
 import logo from ".././../../public/android-chrome-512x512.png";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const Invoice = ({ publickey, blockid, transactionhash, team }: { publickey: string; blockid: string; transactionhash: string; team: string }) => {
+const Invoice = () => {
+    const location=useLocation();
+    const navigate=useNavigate();
+    const { publickey, blockid, transactionhash, team } = location.state;
     let teamImage;
     switch (team) {
         case 'Gryffindor':
@@ -42,8 +46,10 @@ const Invoice = ({ publickey, blockid, transactionhash, team }: { publickey: str
     };
 
     return (
-        <div className='flex items-center flex-col justify-center bg-gradient-to-br from-gray-800 to-black font-serif text-black relative'>
-
+        <div className='flex items-center font-mono flex-col justify-center bg-gradient-to-br from-gray-800 to-black  text-black relative'>
+            <button className='absolute top-0 rounded-lg bg-orange-500 left-0 mx-3 my-5 px-4 py-5  font-bold' onClick={()=>{
+                navigate('/buyLand')
+            }}>Back</button>
             <img src={logo} alt="Logo" className="absolute top-0 rounded-full right-0 w-20 h-20" />
             <div className='flex flex-col items-center h-screen'>
                 <table id='invoice' className='table max-h-60 mt-40 text-center border-4 bg-white border-black font-mono text-2xl'>

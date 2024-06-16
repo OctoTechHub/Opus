@@ -103,7 +103,6 @@ app.post('/buy-tokens', (req, res) => __awaiter(void 0, void 0, void 0, function
         transaction.sign(buyerKeys);
         yield server.submitTransaction(transaction);
         console.log("Trustline created successfully");
-        // Load the buyer's account again and create a buy offer
         const updatedBuyerAccount = yield server.loadAccount(buyerKeys.publicKey());
         transaction = new stellar_sdk_1.default.TransactionBuilder(updatedBuyerAccount, {
             fee: stellar_sdk_1.default.BASE_FEE,
@@ -112,8 +111,8 @@ app.post('/buy-tokens', (req, res) => __awaiter(void 0, void 0, void 0, function
             .addOperation(stellar_sdk_1.default.Operation.manageBuyOffer({
             selling: stellar_sdk_1.default.Asset.native(),
             buying: OpusToken,
-            buyAmount: amount, // Amount of OpusToken to buy
-            price: "10", // Price in XLM per OpusToken
+            buyAmount: amount,
+            price: "10",
         }))
             .setTimeout(100)
             .build();
@@ -151,6 +150,7 @@ app.get('/fetch-OpusToken/:publickey', (req, res) => __awaiter(void 0, void 0, v
 app.post('/buy-block', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const server = new stellar_sdk_1.default.Horizon.Server("https://horizon-testnet.stellar.org");
+    console.log(req.body);
     const { publickey, privatekey, blockid } = req.body; // Ensure you have correct key names from the request
     const userKeypair = stellar_sdk_1.default.Keypair.fromSecret(privatekey);
     try {

@@ -8,7 +8,6 @@ import Hufflepuff from "../Images/Hufflepuff.jpeg";
 
 interface BlockDetailsProps {
   selectedBlock: { id: number; team: string } | null;
- 
 }
 
 const teamImages: { [key: string]: string } = {
@@ -30,7 +29,7 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock }) => {
 
   if (!selectedBlock) {
     return (
-      <div className="block-details">
+      <div className="block-details bg-slate-900 text-white text-4xl font-mono font-bold">
         <p>No block selected</p>
       </div>
     );
@@ -47,6 +46,7 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock }) => {
         Block={selectedBlock.id.toString()}
         publickey={localStorage.getItem('publickey') || ''}
         privatekey={localStorage.getItem('privatekey') || ''}
+        teamName={selectedBlock.team}
       />
     </div>
   );

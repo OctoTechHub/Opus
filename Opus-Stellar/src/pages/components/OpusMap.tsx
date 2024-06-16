@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import 'react-toastify/dist/ReactToastify.css';
 import StellarSdk from 'stellar-sdk';
 import './OpusMap.css';
-import BuyButton from './BuyButton';
 import allocateBlockID from '../utils/allocateBlockID';
 import BlockDetails from './BlockDetailsProps';
 
@@ -13,8 +12,6 @@ interface OpusMapProps {
   publicKey: string;
   privateKey: string;
 }
-
-
 
 const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
   const [selectedBlock, setSelectedBlock] = useState<{ id: number; team: string } | null>(null);
@@ -29,7 +26,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
     const map = L.map('map').setView([22.30992420772124, 73.179856870333], 4);
     var Stadia_StamenWatercolor = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg', {
       minZoom: 1,
-      maxZoom: 16,
+      maxZoom: 15,
       attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
     Stadia_StamenWatercolor.addTo(map);
@@ -42,7 +39,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
       interactive: false,
     }).addTo(map);
 
-    function createBlock(lat:any, lng:any, id:any, team:any) {
+    function createBlock(lat: any, lng: any, id: any, team: any) {
       const bounds: L.LatLngBoundsLiteral = [
         [lat, lng],
         [lat + blockSize, lng + blockSize]
@@ -51,13 +48,13 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
       const block = L.rectangle(bounds, {
         fillOpacity: 0.4,
         color: color,
-        weight:2,
+        weight: 2,
         className: team
       }).addTo(map);
-      block.on('click', () => handleBlockClick(id, team));
+      block.on('click', () => handleBlockClick(lat, lng, id, team)); // Pass lat, lng, id, team to handler
     }
 
-    function getTeamColor(team:string) {
+    function getTeamColor(team: string) {
       switch (team) {
         case 'Hufflepuff':
           return 'orange';
@@ -72,8 +69,9 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
       }
     }
 
-    function handleBlockClick(id:any, team:any) {
+    function handleBlockClick(lat: any, lng: any, id: any, team: any) {
       setSelectedBlock({ id, team });
+      map.flyToBounds([[lat, lng], [lat + blockSize, lng + blockSize]]);
     }
 
     let id = 1;
@@ -105,42 +103,20 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
     };
   }, []);
 
-  const handleBuyBlock = async (id: number) => {
-    const privateKey = localStorage.getItem("privatekey");
-    const publicKey = localStorage.getItem("publickey");
-
-    if (privateKey && publicKey) {
-      try {
-        await allocateBlockID(id.toString(), privateKey, 'NewDollar', 'GA2XMHHFMN3NDSG5BLQYTDIYFYHBRQFYJ4DZKKBI7JDVIVPIVHVNA2ND', '10');
-        setOwnership(prevOwnership => ({
-          ...prevOwnership,
-          [id]: publicKey
-        }));
-        setUser(prevUser => ({
-          ...prevUser,
-          ownedBlocks: [...prevUser.ownedBlocks, id]
-        }));
-        if (selectedBlock) {
-          setSelectedBlock({ ...selectedBlock, team: publicKey });
-        }
-      } catch (error: any) {
-        console.error('Transaction failed:', error.response?.data || error.message);
-        toast.error('Transaction failed');
-      }
-    } else {
-      toast.error('Authentication failed: Private key and Public key not found');
-    }
-  };
+ 
 
   return (
-    <>
-      <ToastContainer />
-      <div className="map-container">
-        <div id="map" className="map"></div>
+    <div className='w-screen'>
+      <div className="opus-map-container">
+        <ToastContainer />
+        <div className="map-container mr-10">
+          <div id="map" className="map"></div>
+        </div>
+        <div className="block-details-container">
+          <BlockDetails selectedBlock={selectedBlock}/>
+        </div>
       </div>
-
-      <BlockDetails selectedBlock={selectedBlock} onBuy={handleBuyBlock} />
-    </>
+    </div>
   );
 };
 

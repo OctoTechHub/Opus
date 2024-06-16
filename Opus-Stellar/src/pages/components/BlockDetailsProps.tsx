@@ -8,7 +8,7 @@ import Hufflepuff from "../Images/Hufflepuff.jpeg";
 
 interface BlockDetailsProps {
   selectedBlock: { id: number; team: string } | null;
-  onBuy: (id: number) => void;
+ 
 }
 
 const teamImages: { [key: string]: string } = {
@@ -18,7 +18,7 @@ const teamImages: { [key: string]: string } = {
   Hufflepuff: Hufflepuff,
 };
 
-const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock, onBuy }) => {
+const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock }) => {
   const [blockImage, setBlockImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,10 +37,12 @@ const BlockDetails: React.FC<BlockDetailsProps> = ({ selectedBlock, onBuy }) => 
   }
 
   return (
-    <div className="block-details text-white bg-slate-300 font-mono hover:bg-slate-900 transition duration-200 p-4 rounded flex flex-col items-center">
+    <div className="block-details text-white bg-slate-900 font-mono w-[80%] p-4 rounded flex flex-col items-center ">
       <h2>Block {selectedBlock.id}</h2>
       <p>Team: {selectedBlock.team}</p>
-      {blockImage && <img src={blockImage} alt={selectedBlock.team} className="my-4" />}
+      {blockImage && 
+      
+      <div className=' w-full'><img src={blockImage} alt={selectedBlock.team} className="mt-2" /> </div>}
       <BuyButton
         Block={selectedBlock.id.toString()}
         publickey={localStorage.getItem('publickey') || ''}

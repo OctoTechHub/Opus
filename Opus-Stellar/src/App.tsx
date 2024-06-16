@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import StellarAccountCreation from './pages/StellarAcountCreation';
 import BuyAsset from './pages/BuyAsset';
 import BuyLand from './pages/BuyLand';
+import Transaction from './pages/Transactions';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/create" element={<StellarAccountCreation />} />
         <Route path="/buyAsset" element={<BuyAsset/>} />
         <Route path="/buyLand" element={<BuyLand  />}/>
+        <Route path="/transactions" element={<Transaction />} />
       </Routes>
     </Router>
   );

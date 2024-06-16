@@ -61,3 +61,7 @@
     transform: scale(0.98);
   }
   
+  .buy-button:hover {
+    background-color: #4a5568; 
+  }
+  

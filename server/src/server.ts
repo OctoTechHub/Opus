@@ -44,6 +44,14 @@ app.get('/fund-account/:publicKey', async (req, res) => {
         });
     }
 });
+app.get('/allowners', async (req, res) => {
+    try {
+        const allOwners = await Txn.find();
+        res.send(allOwners);
+    } catch (error: any) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+});
 app.get('/fetch-balance', async (req, res) => {
     try {
         const response = await axios.get(`https://horizon-testnet.stellar.org/accounts/${req.query.publicKey}`);

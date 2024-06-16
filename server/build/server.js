@@ -55,6 +55,15 @@ app.get('/fund-account/:publicKey', (req, res) => __awaiter(void 0, void 0, void
         });
     }
 }));
+app.get('/allowners', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const allOwners = yield mongoose_2.default.find();
+        res.send(allOwners);
+    }
+    catch (error) {
+        res.status(500).send(`Error: ${error.message}`);
+    }
+}));
 app.get('/fetch-balance', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield axios_1.default.get(`https://horizon-testnet.stellar.org/accounts/${req.query.publicKey}`);

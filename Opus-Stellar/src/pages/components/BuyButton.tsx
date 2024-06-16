@@ -13,7 +13,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ Block, publickey, privatekey }) =
       console.error("Public key or Private key not found");
       return;
     }
-    
+
     try {
       const response = await axios.post("http://localhost:3000/buy-block", {
         publickey,
@@ -27,9 +27,9 @@ const BuyButton: React.FC<BuyButtonProps> = ({ Block, publickey, privatekey }) =
   };
 
   return (
-    <div>
+    <div className="text-white">
       <button
-        className="buy-button bg-slate-900 hover:bg-slate-800 transition duration-200 text-white font-bold px-4 py-2 rounded"
+        className="buy-button bg-slate-900 hover:bg-slate-800 transition duration-200 font-bold px-4 py-2 rounded text-black hover:text-white"
         onClick={() => onBuy(Block)}
         style={{ width: '150px' }}
       >

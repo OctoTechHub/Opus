@@ -20,7 +20,7 @@ const BuyAsset = () => {
   useEffect(() => {
     fetchAccountDetails();
     fetchTransactions();
-    fetchOpTokenBalance();
+
   }, []);
 
   const fetchAccountDetails = async () => {
@@ -31,6 +31,7 @@ const BuyAsset = () => {
       );
       console.log(response.data);
       setBalance(response.data.balances[1].balance);
+      setOpTokens(response.data.balances[0].balance);
     } catch (error) {
       console.error("Error fetching account details:", error);
     } finally {
@@ -94,12 +95,7 @@ const BuyAsset = () => {
     }
   };
 
-  const fetchOpTokenBalance = () => {
-    const storedOpTokens = localStorage.getItem("optokens");
-    if (storedOpTokens) {
-      setOpTokens(parseInt(storedOpTokens, 10));
-    }
-  };
+
 
   const handleBuyLand = () => {
     navigate('/buyLand');

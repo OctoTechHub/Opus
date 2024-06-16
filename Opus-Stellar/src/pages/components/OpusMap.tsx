@@ -63,7 +63,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
           return 'orange';
         case 'Gryffindor':
           return 'red';
-        case 'RavenClaw':
+        case 'Ravenclaw':
           return 'blue';
         case 'Slytherin':
           return 'green';
@@ -86,7 +86,7 @@ const OpusMap: React.FC<OpusMapProps> = ({ publicKey, privateKey }) => {
     }
 
     function getRandomTeam() {
-      const teams = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'RavenClaw'];
+      const teams = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'Ravenclaw'];
       return teams[Math.floor(Math.random() * teams.length)];
     }
 

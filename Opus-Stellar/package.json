@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@stellar/stellar-sdk": "^12.0.1",
     "@types/leaflet": "^1.9.12",
     "@types/mongoose": "^5.11.97",
@@ -22,6 +26,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.27.2",
+    "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "stellar-sdk": "^12.0.1"

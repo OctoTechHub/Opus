@@ -142,6 +142,7 @@ const StellarAccountCreation = () => {
           )}
         </div>
       </div>
+    
     </>
   );
 };

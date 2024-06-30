@@ -5,7 +5,7 @@ import './GlobeComponent.css';
 
 const GlobeComponent: React.FC = () => {
   const [arcsData, setArcsData] = useState<any[]>([]);
-  const [title] = useState<string>('Welcome to Opus-Stellar!');
+  const [title] = useState<string>('Welcome to Fantility!');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const GlobeComponent: React.FC = () => {
         <p className='text-6xl font-mono'>
           {title}
         </p>
-        <p className='text-2xl font-semibold mt-4 font-mono'>Enter into the World of Virtual Estate</p>
+        <p className='text-2xl font-semibold mt-4 font-mono'>your go-to fandom based virtual experience platform</p>
         <button className="bg-orange-500 hover:bg-orange-700 text-white font-mono py-2 px-4 mt-4 rounded"
                 onClick={handleGetStarted}>
           Get Started Today

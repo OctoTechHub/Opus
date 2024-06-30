@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from '../../../public/173474766.png';
 
 const Navbar = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -43,16 +44,15 @@ const Navbar = () => {
     }
   };
 
-  // Check if public and private keys are recognized
   const isKeysRecognized = publicKey && privateKey;
 
   return (
-    <nav className="bg-black text-white shadow-md py-4">
+    <nav className="bg-black text-white shadow-md py-4 font-mono">
       <ToastContainer />
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold font-mono text-white">
-            Stellar App
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="Logo" className="h-8 mr-2" /> Fantility
           </Link>
           {location.pathname === '/' && (
             <button

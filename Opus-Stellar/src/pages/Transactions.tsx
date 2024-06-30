@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/footer";
 
 interface TransactionData {
   _id: string;
@@ -86,6 +87,7 @@ const Transaction = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
